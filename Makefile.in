@@ -41,6 +41,8 @@ mandir = @mandir@
 CC = @CC_QUALIFIED@
 CFLAGS = @CFLAGS@ -I ${srcdir}
 LDFLAGS = @LDFLAGS@
+AR = ar
+RANLIB = ranlib
 
 SOURCES = $(wildcard ${srcdir}/*.c ${srcdir}/*.h)
 OBJECTS = regex.o
@@ -70,7 +72,9 @@ libgnurx-$(DLLVERSION).dll libgnurx.dll.a: $(OBJECTS)
 	$(CC) $(CFLAGS) -shared -o libgnurx-$(DLLVERSION).dll $(LDFLAGS) $(OBJECTS)
 
 libregex.a: libgnurx.dll.a
-	cp -p libgnurx.dll.a $@
+	$(AR) cr $@ $(OBJECTS)
+	$(RANLIB) $@
+	cp -p $@ libgnurx.a
 
 gnurx.lib: libgnurx-$(DLLVERSION).dll
 	$(MSVCLIB) -def:libgnurx.def -out:gnurx.lib

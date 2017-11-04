@@ -75,7 +75,7 @@
 #
   AC_SUBST([GNURX_LIB])
   AC_SUBST([CC_QUALIFIED], ["$CC $CC_QUALIFIED"])
-  LDFLAGS="$LDFLAGS -Wl,--enable-auto-image-base -Wl,--out-implib,libgnurx.dll.a"
+  LDFLAGS="$LDFLAGS -Wl,--enable-auto-image-base -Wl,--out-implib,libgnurx.dll.a -Wl,--output-def,libgnurx.def"
   test -n "${GNURX_LIB}" && LDFLAGS="$LDFLAGS -Wl,--output-def,libgnurx.def"
   AC_CONFIG_FILES([Makefile])
   AC_OUTPUT
