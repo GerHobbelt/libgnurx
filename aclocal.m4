@@ -33,8 +33,7 @@ AC_DEFUN([MINGW_AC_PROG_CC_OPTIONS],
 [AC_LANG_PUSH(C)
  popCFLAGS=$CFLAGS
  echo 'int main(void){return 0;}' > conftest.$ac_ext
- AC_FOREACH([OPTION], [$3],
-  [AC_MSG_CHECKING([whether $CC accepts the $2[]m4_normalize(OPTION) option])
+ m4_foreach_w([OPTION],[$3],[AC_MSG_CHECKING([whether $CC accepts the $2[]m4_normalize(OPTION) option])
    CFLAGS="$popCFLAGS $$1 $2[]m4_normalize(OPTION)"
    if (eval $ac_compile) 2>&5; then
      AC_MSG_RESULT([yes])
