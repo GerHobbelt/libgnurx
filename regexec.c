@@ -782,8 +782,8 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 	goto free_return;
 
 #ifdef RE_ENABLE_I18N
-     /* Don't consider this char as a possible match start if it part,
-	yet isn't the head, of a multibyte character.  */
+      /* Don't consider this char as a possible match start if it part,
+	     yet isn't the head, of a multibyte character.  */
       if (!sb && !re_string_first_byte (&mctx.input, 0))
 	continue;
 #endif
