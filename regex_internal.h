@@ -29,6 +29,21 @@
 #define strcasecmp stricmp
 #endif
 
+#if defined(_MSC_VER)
+#define __attribute__(x)
+#define __attribute_warn_unused_result__
+#define __glibc_unlikely(c)      c
+#define __glibc_likely(c)        c
+#define weak_alias(x, y)
+#define libc_hidden_def(f)
+#define __restrict
+#define FALLTHROUGH
+
+/* True if the real type T is signed.  */
+#define TYPE_SIGNED(t) ( !((t) 0 < (t) -1) )
+
+#endif
+
 #if defined HAVE_LANGINFO_H || defined HAVE_LANGINFO_CODESET || defined _LIBC
 # include <langinfo.h>
 #endif
@@ -50,12 +65,14 @@ typedef enum { false, true } bool;
 # include <stdint.h>
 #endif /* HAVE_STDINT_H || _LIBC */
 
-#ifndef _LIBC
+#if !defined(_LIBC) && !defined(_MSC_VER)
 # include <dynarray.h>
 #endif
 
+#if !defined(_MSC_VER)
 #include <intprops.h>
 #include <verify.h>
+#endif
 
 #if defined DEBUG && DEBUG != 0
 # include <assert.h>
@@ -893,7 +910,9 @@ re_string_elem_size_at (const re_string_t *pstr, Idx idx)
 #  define FALLTHROUGH ((void) 0)
 # endif
 #else
+#if !defined(_MSC_VER)
 # include "attribute.h"
+#endif
 #endif
 
 #endif /*  _REGEX_INTERNAL_H */

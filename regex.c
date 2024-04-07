@@ -19,7 +19,7 @@
 
 #define __STDC_WANT_IEC_60559_BFP_EXT__
 
-#ifndef _LIBC
+#if defined(_LIBC)
 # include <libc-config.h>
 
 # if __GNUC_PREREQ (4, 6)

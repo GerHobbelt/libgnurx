@@ -71,7 +71,7 @@ typedef unsigned long int active_reg_t;
    add or remove a bit, only one other definition need change.  */
 typedef unsigned long int reg_syntax_t;
 
-#ifdef __USE_GNU
+#if defined(__USE_GNU) || 01
 /* If this bit is not set, then \ inside a bracket expression is literal.
    If set, then such a \ quotes the following character.  */
 # define RE_BACKSLASH_ESCAPE_IN_LISTS ((unsigned long int) 1)
@@ -210,7 +210,7 @@ typedef unsigned long int reg_syntax_t;
    already-compiled regexps.  */
 extern reg_syntax_t re_syntax_options;
 
-#ifdef __USE_GNU
+#if defined(__USE_GNU) || 01
 /* Define combinations of the above bits for the standard possibilities.
    (The [[[ comments delimit what gets put into the Texinfo file, so
    don't delete them!)  */
@@ -399,12 +399,12 @@ typedef enum
 
 #ifndef RE_TRANSLATE_TYPE
 # define __RE_TRANSLATE_TYPE unsigned char *
-# ifdef __USE_GNU
+//# ifdef __USE_GNU
 #  define RE_TRANSLATE_TYPE __RE_TRANSLATE_TYPE
-# endif
+//# endif
 #endif
 
-#ifdef __USE_GNU
+#if defined(__USE_GNU) || 01
 # define __REPB_PREFIX(name) name
 #else
 # define __REPB_PREFIX(name) __##name
@@ -434,7 +434,7 @@ struct re_pattern_buffer
      comparing them, or zero for no translation.  The translation is
      applied to a pattern when it is compiled and to a string when it
      is matched.  */
-  __RE_TRANSLATE_TYPE __REPB_PREFIX(translate);
+  RE_TRANSLATE_TYPE __REPB_PREFIX(translate);
 
   /* Number of subexpressions found by the compiler.  */
   size_t re_nsub;
@@ -449,7 +449,7 @@ struct re_pattern_buffer
      for 'max (RE_NREGS, re_nsub + 1)' groups.
      If REGS_REALLOCATE, reallocate space if necessary.
      If REGS_FIXED, use what's there.  */
-#ifdef __USE_GNU
+#if defined(__USE_GNU) || 01
 # define REGS_UNALLOCATED 0
 # define REGS_REALLOCATE 1
 # define REGS_FIXED 2
@@ -647,7 +647,7 @@ extern int re_exec (const char *);
      || 2 < __GNUC__ + (95 <= __GNUC_MINOR__) \
      || __clang_major__ >= 3
 #  define _Restrict_ __restrict
-# elif 199901L <= __STDC_VERSION__ || defined restrict
+# elif (199901L <= __STDC_VERSION__ || defined restrict) && !defined(_MSC_VER)
 #  define _Restrict_ restrict
 # else
 #  define _Restrict_

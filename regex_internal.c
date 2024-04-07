@@ -688,7 +688,7 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 			 pstr->valid_len - offset);
 	      pstr->valid_len -= offset;
 	      pstr->valid_raw_len -= offset;
-	      DEBUG_ASSERT (pstr->valid_len > 0);
+	      DEBUG_ASSERT(pstr->valid_len > 0);
 	    }
 	}
       else
