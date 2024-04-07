@@ -18,6 +18,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#if defined(GNURX_AMALGAMATION)
+
 static void re_string_construct_common (const char *str, int len,
 					re_string_t *pstr,
 					RE_TRANSLATE_TYPE trans, int icase,
@@ -1715,3 +1717,5 @@ create_cd_newstate (const re_dfa_t *dfa, const re_node_set *nodes,
     }
   return  newstate;
 }
+
+#endif

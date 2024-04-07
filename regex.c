@@ -60,6 +60,8 @@
 #include <regex.h>
 #include "regex_internal.h"
 
+#define GNURX_AMALGAMATION
+
 #include "regex_internal.c"
 #include "regcomp.c"
 #include "regexec.c"
