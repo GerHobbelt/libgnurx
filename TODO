@@ -1,0 +1,8 @@
+- Adjust make dist commands
+- Nuget
+- CI
+- test/sample app
+- update readme
+- convert to drop-in replace (MSVC only)
+    - remove mingw stuff
+    - rename to regexvs (see getoptvs)

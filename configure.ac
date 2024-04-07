@@ -47,7 +47,7 @@
 # your option) any later version.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with this software; see the file COPYING.LIB.  If not, write to the
+# along with this software; see the file COPYING.  If not, write to the
 # Free Software Foundation, 51 Franklin St - Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
@@ -75,7 +75,7 @@
 #
   AC_SUBST([GNURX_LIB])
   AC_SUBST([CC_QUALIFIED], ["$CC $CC_QUALIFIED"])
-  LDFLAGS="$LDFLAGS -Wl,--enable-auto-image-base -Wl,--out-implib,libgnurx.dll.a"
+  LDFLAGS="$LDFLAGS -Wl,--enable-auto-image-base -Wl,--out-implib,libgnurx.dll.a -Wl,--output-def,libgnurx.def"
   test -n "${GNURX_LIB}" && LDFLAGS="$LDFLAGS -Wl,--output-def,libgnurx.def"
   AC_CONFIG_FILES([Makefile])
   AC_OUTPUT

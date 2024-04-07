@@ -1,0 +1,79 @@
+#NMAKE makefile for Windows developers.
+
+################################################################
+# configuration section
+################################################################
+
+
+BUILD_DEBUG = 0
+BUILD_STATIC = 1
+
+# DLLVERSION stays for binary compatibility with MinGW
+DLLVERSION = 0
+#
+# System inc, lib, and bin directories
+!ifndef INSTDIR
+INSTDIR = $(VCINSTALLDIR)
+!endif
+
+!if "$(PLATFORM)" == "x64"
+MACHINE = \amd64
+!endif
+
+INSTALL_LIB = $(INSTDIR)lib$(MACHINE)
+INSTALL_INC = $(INSTDIR)Include
+INSTALL_BIN = $(INSTDIR)bin$(MACHINE)
+
+CC = cl /nologo
+!ifndef BUILD_DEBUG
+CFLAGS = /DWIN32 /D_WINDOWS /DNDEBUG /W3 /I. /Zi /O2 /Ob1
+CFLAGS_STATIC = /DWIN32 /D_WINDOWS /DNDEBUG /W3 /I. /Z7 /O2 /Ob1
+!else
+CFLAGS = /DWIN32 /D_WINDOWS /D_DEBUG /I. /Zi /Ob0 /Od /RTC1
+CFLAGS_STATIC = /DWIN32 /D_WINDOWS /D_DEBUG /I. /Z7 /Ob0 /Od /RTC1
+!endif
+
+CC1 = $(CC) $(CFLAGS)
+CC2 = $(CC) $(CFLAGS_STATIC)
+
+LD = link /nologo
+LDFLAGS = /dll /debug /INCREMENTAL /def:libgnurx.def
+
+LD1 = $(LD) $(LDFLAGS)
+
+AR = lib /nologo
+
+OBJS = regex.obj
+
+################################################################
+# end configuration section
+################################################################
+
+all: libgnurx-$(DLLVERSION).dll gnurx.lib libregex.lib libgnurx.lib
+
+libgnurx-$(DLLVERSION).dll gnurx.lib:
+	$(CC1) /c regex.c
+	$(LD1) /out:libgnurx-$(DLLVERSION).dll /implib:gnurx.lib $(OBJS)
+
+libregex.lib: clean
+	$(CC2) /c regex.c
+	$(AR) /nologo $(OBJS) /out:$@
+
+libgnurx.lib: clean
+	$(CC2) /c regex.c
+	$(AR) /nologo $(OBJS) /out:$@
+
+install: all
+	if not exist "$(INSTALL_LIB)" mkdir "$(INSTALL_LIB)"
+	if not exist "$(INSTALL_INC)" mkdir "$(INSTALL_INC)"
+	if not exist "$(INSTALL_BIN)" mkdir "$(INSTALL_BIN)"
+	copy *.lib "$(INSTALL_LIB)"
+	copy regex.h "$(INSTALL_INC)"
+	copy libgnurx-$(DLLVERSION).dll "$(INSTALL_BIN)"
+	copy libgnurx-$(DLLVERSION).pdb "$(INSTALL_BIN)"
+
+clean:
+	del *.obj
+
+realclean:
+	del *.obj *.lib *.dll *.exp *.pdb *.idb *.ilk

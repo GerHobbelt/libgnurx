@@ -1,0 +1,15 @@
+*.o
+Makefile
+*.a
+*.dll
+config.*
+autom4te.cache
+*.obj
+*.lib
+*.exp 
+*.pdb 
+*.idb 
+*.ilk
+*.*~
+*.gz
+*.zip

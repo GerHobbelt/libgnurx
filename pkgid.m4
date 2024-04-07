@@ -48,10 +48,10 @@ m4_define([MINGW_AC_DEFINE_PACKAGE_ID],
 
 # Define default values for the optional tags.
 #
-MINGW_AC_DEFINE_PACKAGE_ID([PROVIDER],        [MinGW])
-MINGW_AC_DEFINE_PACKAGE_ID([TARNAME_PREFIX],  [mingw])
+MINGW_AC_DEFINE_PACKAGE_ID([PROVIDER],        [sgeto])
+MINGW_AC_DEFINE_PACKAGE_ID([TARNAME_PREFIX],  [win32])
 MINGW_AC_DEFINE_PACKAGE_ID([BUG_TRACKER_URI],
-[https://sourceforge.net/tracker/?group_id=2435&atid=102435])
+[https://github.com/sgeto/libgnurx])
 
 # __MINGW_AC_PACKAGE_IDENTIFICATION__
 # -----------------------------------

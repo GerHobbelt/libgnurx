@@ -24,7 +24,7 @@ DLLVERSION = @DLLVERSION@
 # your option) any later version.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with this software; see the file COPYING.LIB.  If not, write to the
+# along with this software; see the file COPYING.  If not, write to the
 # Free Software Foundation, 51 Franklin St - Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
@@ -37,10 +37,14 @@ includedir = @includedir@
 libdir = @libdir@
 bindir = @bindir@
 mandir = @mandir@
+datarootdir = @datarootdir@
+datadir = @datadir@
 
 CC = @CC_QUALIFIED@
 CFLAGS = @CFLAGS@ -I ${srcdir}
 LDFLAGS = @LDFLAGS@
+AR = ar
+RANLIB = ranlib
 
 SOURCES = $(wildcard ${srcdir}/*.c ${srcdir}/*.h)
 OBJECTS = regex.o
@@ -50,7 +54,7 @@ MSVCLIB = lib
 BINDIST_FILES = libgnurx-$(DLLVERSION).dll
 DEVDIST_FILES = libgnurx.dll.a libregex.a @GNURX_LIB@
 SRCDIST_FILES = ${srcdir}/configure ${srcdir}/configure.ac ${srcdir}/aclocal.m4 \
-  ${srcdir}/pkgid.m4 ${srcdir}/Makefile.in ${srcdir}/README ${srcdir}/COPYING.LIB \
+  ${srcdir}/pkgid.m4 ${srcdir}/Makefile.in ${srcdir}/README ${srcdir}/COPYING \
   $(SOURCES) $(wildcard ${srcdir}/*.[37]) ${srcdir}/ChangeLog
 
 ZIPCMD = @ZIPCMD@
@@ -70,7 +74,9 @@ libgnurx-$(DLLVERSION).dll libgnurx.dll.a: $(OBJECTS)
 	$(CC) $(CFLAGS) -shared -o libgnurx-$(DLLVERSION).dll $(LDFLAGS) $(OBJECTS)
 
 libregex.a: libgnurx.dll.a
-	cp -p libgnurx.dll.a $@
+	$(AR) cr $@ $(OBJECTS)
+	$(RANLIB) $@
+	cp -p $@ libgnurx.a
 
 gnurx.lib: libgnurx-$(DLLVERSION).dll
 	$(MSVCLIB) -def:libgnurx.def -out:gnurx.lib
